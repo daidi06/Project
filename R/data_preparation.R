@@ -8,7 +8,8 @@ read_and_transform <- function(file_path) {
   
   # Ensure all year columns are of type character
   data <- data %>%
-    mutate(across(where(is.numeric), as.character))
+    mutate(across(where(is.numeric), as.character)) %>% 
+    select(country, "2000":"2030")
   
   # Convert to long format
   data_long <- data %>%
@@ -29,8 +30,7 @@ combined_data <- reduce(data_list, full_join, by = c("country", "year"))
 combined_data <- combined_data %>%
   mutate(
     child_mortality_num = as.numeric(child_mortality),
-    lex_num = as.numeric(lex),
-    mincpcap_num = as.numeric(mincpcap)
+    lex_num = as.numeric(lex)
   )
 
 convert_values <- function(value) {
@@ -55,7 +55,7 @@ combined_data <- combined_data %>%
   mutate(
     iso3c = countrycode(country, origin = "country.name", destination = "iso3c")
   ) %>% 
-  select(country, iso3c, year, child_mortality_num, lex_num, mincpcap_num, gdp_pcap_num, pop_num)
+  select(country, iso3c, year, child_mortality_num, lex_num, gdp_pcap_num, pop_num)
 
 # Download country polygons
 world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")

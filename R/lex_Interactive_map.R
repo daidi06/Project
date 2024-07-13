@@ -12,5 +12,5 @@ p <- world_data %>%
   ease_aes('linear')
 
 # Animate and save
-gdp_anim <- animate(p, nframes = 100, fps = 10, width = 800, height = 600, renderer = gifski_renderer())
+gdp_anim <- animate(p, nframes = 20, fps = 5, width = 600, height = 400, renderer = gifski_renderer())
 gganimate::anim_save(here("images/lex_animated_map.gif"), animation = gdp_anim)

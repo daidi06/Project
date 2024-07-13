@@ -37,9 +37,15 @@ pacman::p_load(tidyverse,
 ```{r}
 source(here("R/data_preparation.R"))
 source(here("R/child_mortality.R"))
+#source(here("R/child_mortality_Interactive_map.R"))
 source(here("R/gdp_pcap.R"))
+#source(here("R/gdp_pcap_Interactive_map.R"))
 source(here("R/lex.R"))
+#source(here("R/lex_Interactive_map.R"))
 ```
+
+
+
 # Child mortality
 
 ## Row 1 {height=25%}
@@ -267,7 +273,9 @@ knitr::include_graphics(here("images/lex_animated_map.gif"))
 
 The data used in the dashboard is shown below and can be downloaded as a CSV.
 
-## Row 1 { height=50%}
+## Row 1
+
+### Column 1 {width=60%}
 
 
 ```{r}
@@ -281,9 +289,7 @@ htmltools::browsable(
 )
 ```
 
-## Row 2 {height=50%}
-
-### Column {.tabset width="50%"}
+### Column {.tabset width="40%"}
 
 ```{r cm-data}
 #| title: Child mortality
