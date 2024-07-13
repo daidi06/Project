@@ -1,0 +1,342 @@
+--- 
+title: "PORTAL"
+author: "DIDIER ILBOUDO"
+format: 
+  dashboard:
+    logo: images/phenix.png
+theme: yeti
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+# Load packages 
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load(tidyverse, 
+               here,
+               sf,
+               bslib, 
+               bsicons,
+               rnaturalearth,
+               rnaturalearthdata,
+               plotly, 
+               countrycode, 
+               htmltools, 
+               reactable,
+               janitor,
+               gganimate,
+               viridis,
+               gifski,
+               lubridate
+)
+```
+
+
+```{r}
+source(here("R/data_preparation.R"))
+source(here("R/child_mortality.R"))
+source(here("R/gdp_pcap.R"))
+source(here("R/lex.R"))
+```
+# Child mortality
+
+## Row 1 {height=25%}
+
+### Column 1
+
+```{r}
+value_box(
+  title = "Highest Child Mortality",
+  value = highest_mean_cm_value,
+  showcase = bsicons::bs_icon("heart"),
+  theme = value_box_theme(bg = "#5d86ed"),
+  p(paste0("(", highest_mean_cm_country, ")"))
+)
+```
+
+### Column 2
+
+```{r}
+value_box(
+  title = "Lowest Child Mortality",
+  value = lowest_mean_cm_value,
+  showcase = bsicons::bs_icon("thermometer"),
+  theme = value_box_theme(bg = "#202654"),
+  p(paste0("(", lowest_mean_cm_country, ")"))
+)
+```
+
+
+### Column 3
+
+```{r}
+value_box(
+  title = "Average Child Mortality",
+  value = average_cm_value,
+  showcase = bsicons::bs_icon("graph-up"),
+  theme = value_box_theme(bg = "#3f71ab")
+)
+```
+
+
+## Row 2 {height=75%}
+
+### Column 1 {.tabset width="50%"}
+
+```{r top-10-countries-cm}
+#| title: Top 10 countries
+top_20_country_cm_ggplotly
+```
+
+```{r bottom-10-countries-cm}
+#| title: Bottom 10 countries
+#| caption: Here is the 10 lowest countries .
+bottom_10_country_cm_ggplotly
+```
+
+```{r data-cm}
+#| title: Data
+data_cm
+```
+
+
+### Column 2 {.tabset width="50%"}
+
+```{r title = "Child Mortality Map"}
+cm_map_ggplotly
+```
+
+```{r title = "Animated Child Mortality Map"}
+knitr::include_graphics(here("images/cm_animated_map.gif"))
+```
+
+
+
+
+# GDP per Capita
+
+## Row 1 {height=25%}
+
+### Column 1
+
+```{r}
+value_box(
+  title = "Highest GDP per Capita",
+  value = highest_mean_gdp_value,
+  showcase = bsicons::bs_icon("heart"),
+  theme = value_box_theme(bg = "#5d86ed"),
+  p(paste0("(", highest_mean_gdp_country, ")"))
+)
+```
+
+### Column 2
+
+```{r}
+value_box(
+  title = "Lowest GDP per Capita",
+  value = lowest_mean_gdp_value,
+  showcase = bsicons::bs_icon("thermometer"),
+  theme = value_box_theme(bg = "#202654"),
+  p(paste0("(", lowest_mean_gdp_country, ")"))
+)
+```
+
+
+### Column 3
+
+```{r}
+value_box(
+  title = "Average GDP per Capita",
+  value = average_gdp_value,
+  showcase = bsicons::bs_icon("graph-up"),
+  theme = value_box_theme(bg = "#3f71ab")
+)
+```
+
+
+## Row 2 {height=75%}
+
+### Column 1 {.tabset width="50%"}
+
+```{r top-10-countries}
+#| title: Top 10 countries
+top_20_country_gdp_ggplotly
+```
+
+```{r bottom-10-countries}
+#| title: Bottom 10 countries
+#| caption: Here is the 10 lowest countries .
+bottom_10_country_gdp_ggplotly
+```
+
+```{r today-top-closed}
+#| title: Data
+data_gdp
+```
+
+
+### Column 2 {.tabset width="50%"}
+
+```{r title = "Child Mortality Map"}
+gdp_map_ggplotly
+```
+
+```{r title = "Animated Child Mortality Map"}
+knitr::include_graphics(here("images/gdp_animated_map.gif"))
+```
+
+
+
+
+# Life Expectancy
+
+## Row 1 {height=25%}
+
+### Column 1
+
+```{r}
+value_box(
+  title = "Highest Life Expectancy",
+  value = highest_mean_lex_value,
+  showcase = bsicons::bs_icon("heart"),
+  theme = value_box_theme(bg = "#5d86ed"),
+  p(paste0("(", highest_mean_lex_country, ")"))
+)
+```
+
+### Column 2
+
+```{r}
+value_box(
+  title = "Lowest Life Expectancy",
+  value = lowest_mean_lex_value,
+  showcase = bsicons::bs_icon("thermometer"),
+  theme = value_box_theme(bg = "#202654"),
+  p(paste0("(", lowest_mean_lex_country, ")"))
+)
+```
+
+
+### Column 3
+
+```{r}
+value_box(
+  title = "Average Life Expectancy",
+  value = average_lex_value,
+  showcase = bsicons::bs_icon("graph-up"),
+  theme = value_box_theme(bg = "#3f71ab")
+)
+```
+
+
+## Row 2 {height=75%}
+
+### Column 1 {.tabset width="50%"}
+
+```{r top-10-countries-lex}
+#| title: Top 10 countries
+top_20_country_lex_ggplotly
+```
+
+```{r bottom-10-countries-lex}
+#| title: Bottom 10 countries
+#| caption: Here is the 10 lowest countries .
+bottom_10_country_lex_ggplotly
+```
+
+```{r data-lex}
+#| title: Data
+data_lex
+```
+
+
+### Column 2 {.tabset width="50%"}
+
+```{r title = "Life Expectancy Map"}
+lex_map_ggplotly
+```
+
+```{r title = "Animated Life Expectancy Map"}
+knitr::include_graphics(here("images/lex_animated_map.gif"))
+```
+
+
+# Datasets
+
+The data used in the dashboard is shown below and can be downloaded as a CSV.
+
+## Row 1 { height=50%}
+
+
+```{r}
+htmltools::browsable(
+  tagList(
+    reactable::reactable(combined_data, searchable = TRUE,
+                     filterable = TRUE,
+                     elementId = "combined_data-table"),
+    tags$button("Download as CSV", onclick = "Reactable.downloadDataCSV('combined_data-table')")
+  )
+)
+```
+
+## Row 2 {height=50%}
+
+### Column {.tabset width="50%"}
+
+```{r cm-data}
+#| title: Child mortality
+
+htmltools::browsable(
+  tagList(
+    reactable::reactable(mean_cm %>% 
+  mutate(`mean child mortality over time` = round(mean_cm)) %>% 
+  select(country, `mean child mortality over time`), 
+                         searchable = TRUE,
+                         filterable = TRUE,
+                         elementId = "cm_data-table"),
+    tags$button("Download as CSV", onclick = "Reactable.downloadDataCSV('cm_data-table')")
+  )
+)
+```
+
+```{r gdp-data}
+#| title: GDP per Capita
+
+htmltools::browsable(
+  tagList(
+    reactable::reactable(mean_gdp %>% 
+  mutate(`mean gdp per capita over time` = round(mean_gdp)) %>% 
+  select(country, `mean gdp per capita over time`), 
+                         searchable = TRUE,
+                         filterable = TRUE,
+                         elementId = "gdp_data-table"),
+    tags$button("Download as CSV", onclick = "Reactable.downloadDataCSV('gdp_data-table')")
+  )
+)
+```
+
+```{r lex-data}
+#| title: Life Expectancy
+
+htmltools::browsable(
+  tagList(
+    reactable::reactable(mean_lex %>% 
+  mutate(`mean life expectancy over time` = round(mean_lex)) %>% 
+  select(country, `mean life expectancy over time`), 
+                         searchable = TRUE,
+                         filterable = TRUE,
+                         elementId = "lex_data-table"),
+    tags$button("Download as CSV", onclick = "Reactable.downloadDataCSV('lex_data-table')")
+  )
+)
+```
+
+# ABOUT
+
+This data comes from the r `gapminder` package, and is originally sourced from the Gapminder Foundation.
+
+Gapminder Foundation is a non-profit venture registered in Stockholm, Sweden, that promotes sustainable global development and achievement of the United Nations Millennium Development Goals by increased use and understanding of statistics and other information about social, economic, and environmental development at local, national, and global levels.
+
+Gapminder was founded in 2005 by Ola Rosling, Anna Rosling Rönnlund, and Hans Rosling. The name Gapminder was derived from the "Mind the Gap" warning messages on the London Underground.
